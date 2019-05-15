@@ -7,9 +7,12 @@ class App extends React.Component {
 	constructor() {
 		super();
 		this.state = {
+			textarea: "default text",
 			firstName: "",
 			loading: false,
-			character: {}
+			isFriendly: true,
+			character: {},
+			gender: "default"
 		};
 		this.handleChange = this.handleChange.bind(this);
 	}
@@ -25,9 +28,9 @@ class App extends React.Component {
 	}
 
 	handleChange(event) {
-		const {name, value} = event.target
+		const { name, value, type, checked } = event.target;
 		this.setState({
-			[name]: value
+			[name]: type === "checkbox" ? checked : value
 		});
 	}
 
@@ -35,22 +38,62 @@ class App extends React.Component {
 	render() {
 		return (
 			<div>
-				<form>
-					<input
-						type="text"
-						value={this.state.firstName}
-						name="firstName"
-						placeholder="First Name"
+				{/* Formik */}
+				<label>
+					<form>
+						<input
+							type="text"
+							value={this.state.firstName}
+							name="firstName"
+							placeholder="First Name"
+							onChange={this.handleChange}
+						/>
+						<input
+							type="text"
+							value={this.state.lastName}
+							name="lastName"
+							placeholder="Last Name"
+							onChange={this.handleChange}
+						/>
+					</form>
+				</label>
+				<label>
+					<textarea
+						name="textarea"
+						value={this.state.textarea}
 						onChange={this.handleChange}
 					/>
+				</label>
+				<br />
+				<label>
 					<input
-						type="text"
-						value={this.state.lastName}
-						name="lastName"
-						placeholder="Last Name"
+						type="checkbox"
+						name="isFriendly"
+						checked={this.state.isFriendly}
 						onChange={this.handleChange}
-					/>
-				</form>
+					/> Is friend? 
+				</label>
+				<br />
+				<label>
+					<input
+						type="radio"
+						name="gender"
+						value="male"
+						checked={this.state.gender === "male"}
+						onChange={this.handleChange}
+					/> Male? 
+				</label>
+				<br />
+				<label>
+					<input
+						type="radio"
+						name="gender"
+						value="female"
+						checked={this.state.gender === "female"}
+						onChange={this.handleChange}
+					/> female? 
+				</label>
+
 				<h1>
 					{this.state.firstName} {this.state.lastName}
 				</h1>
