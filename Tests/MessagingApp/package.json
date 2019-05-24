@@ -1,0 +1,17 @@
+{
+  "name": "messagingapp",
+  "version": "1.0.0",
+  "description": "Messaging app using nodejs, reactjs, and socketio",
+  "main": "main.js",
+  "dependencies": {
+    "express": "^4.17.0",
+    "socket.io": "^2.2.0",
+    "socketio": "^1.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
