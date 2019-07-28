@@ -11,6 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
+    "express-graphql": "^0.9.0",
+    "graphql": "^14.4.2",
     "lodash": "^4.17.15",
     "mongodb": "^3.3.0-beta2"
   }
