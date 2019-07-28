@@ -10,9 +10,11 @@ process.env.NODE_ENV = "development";
 //config variables
 const config = require("./config/config.js");
 
+
+
 //module variables
 const app = express();
-app.use(cors());
+app.use(cors(global.gConfig.corsOptions));
 
 // Construct a schema, using GraphQL schema language
 const schema = buildSchema(`
