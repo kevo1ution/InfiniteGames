@@ -2,6 +2,7 @@
 const express = require("express");
 const graphqlHTTP = require("express-graphql");
 const { buildSchema } = require("graphql");
+const cors = require("cors");
 
 //environment varialbes
 process.env.NODE_ENV = "development";
@@ -11,6 +12,7 @@ const config = require("./config/config.js");
 
 //module variables
 const app = express();
+app.use(cors());
 
 // Construct a schema, using GraphQL schema language
 const schema = buildSchema(`

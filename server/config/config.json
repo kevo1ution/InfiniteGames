@@ -3,7 +3,7 @@
         "config_id": "development",
         "app_name": "my app",
         "app_desc": "my app desc",
-        "node_port": 3000,
+        "node_port": 9000,
         "json_indentation": 4,
         "database": "my-app-db-dev"
     },
