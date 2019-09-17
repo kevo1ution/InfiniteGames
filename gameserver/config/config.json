@@ -1,0 +1,34 @@
+{
+  "development": {
+    "config_id": "development",
+    "app_name": "my app",
+    "app_desc": "my app desc",
+    "node_port": 8080,
+    "json_indentation": 4,
+    "database": {
+      "name": "",
+      "password": "",
+      "port": "27017",
+      "host": "localhost",
+      "dbName": "test"
+    },
+    "cors": { "whitelist": [""] }
+  },
+  "testing": {
+    "config_id": "testing"
+  },
+  "staging": {
+    "config_id": "staging"
+  },
+  "production": {
+    "config_id": "production",
+    "node_port": 8080,
+    "database": {
+      "name": "admin",
+      "password": "password",
+      "port": "27017",
+      "host": "localhost",
+      "dbName": "prod"
+    }
+  }
+}
