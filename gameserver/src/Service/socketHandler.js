@@ -14,18 +14,7 @@ const listen = server => {
       socket.join(userId);
     });
 
-    //user is switching rooms to subscribe to a new issue
-    socket.on('subscribe', room => {
-      socket.join(room);
-    });
-
-    socket.on('unsubscribe', room => {
-      socket.leave(room);
-    });
-
     socket.on('disconnect', reason => {});
-
-    socket.emit('/handshake');
   });
 
   console.log('Socketio is setup!');
@@ -36,47 +25,8 @@ const listen = server => {
 //get the io
 const getio = () => io;
 
-//important io messages
-const onNewIssue = newIssue => {
-  io.emit('/issue', newIssue);
-};
-
-const onUpdateIssue = newIssue => {
-  io.emit('/updateIssue', newIssue);
-};
-
-//update io issue
-const onNewCommand = newCommand => {
-  io.to(newCommand.issueId).emit('/command', newCommand);
-};
-
-//update command
-const onUpdateCommand = newCommand => {
-  io.to(newCommand.issueId).emit('/updateCommand', newCommand);
-};
-
-//important io messages
-const onUpdateBindex = bindex => {
-  io.emit('/updateBindex', bindex);
-};
-
-const onUpdateBridgeCommand = bcommand => {
-  io.to(bcommand.bindexId).emit('/updateBridgeCommand', bcommand);
-};
-
-const onUpdateLog = log => {
-  io.to(log.bindexId).emit('/updateLog', log);
-};
-
 //Socket connection (user)
 module.exports = {
   listen,
   getio,
-  onNewIssue,
-  onUpdateIssue,
-  onNewCommand,
-  onUpdateCommand,
-  onUpdateBindex,
-  onUpdateBridgeCommand,
-  onUpdateLog
 };
