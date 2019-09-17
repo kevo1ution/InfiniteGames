@@ -1,4 +1,6 @@
 
+let noOp = ()=>{}
+
 exports.Cleanup = function Cleanup(callback) {
 
   // attach user callback to the process event emitter
@@ -14,7 +16,7 @@ exports.Cleanup = function Cleanup(callback) {
   // catch ctrl+c event and exit normally
   process.on('SIGINT', function () {
     console.log('Ctrl-C...');
-    process.exit(2);
+    process.exit();
   });
 
   //catch uncaught exceptions, trace, then exit normally

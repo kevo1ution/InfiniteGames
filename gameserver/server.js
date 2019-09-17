@@ -39,7 +39,7 @@ dbsetup.connectDB(err => {
     console.log('cleaning up');
 
     //check if there are still writes that need to be executed;
-    dbsetup.getDB().close();
+    dbsetup.getClient().close();
   })
 
 });
