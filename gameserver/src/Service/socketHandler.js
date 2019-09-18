@@ -1,32 +1,48 @@
-const mongo = require('mongodb');
-let io;
+const WebSocketServer = require("websocket").server;
+let wsServer;
 
-//setup the socket
-const listen = server => {
-  io = require('socket.io')(server);
+function originIsAllowed(origin) {
+  // TODO: logic for which origins are allowed to connect to websocket
+  return true;
+}
 
-  io.on('connection', function(socket) {
-    console.log('connection');
-
-    //auto connect socket to user id
-    socket.on('userId', userId => {
-      console.log(userId);
-      socket.join(userId);
-    });
-
-    socket.on('disconnect', reason => {});
+function listen(server) {
+  wsServer = new WebSocketServer({
+    httpServer: server,
+    autoAcceptConnections: false
   });
 
-  console.log('Socketio is setup!');
- 
-  return io;
-};
+  wsServer.on("request", function(request) {
+    if (!originIsAllowed(request.origin)) {
+      request.reject();
+      console.log(
+        new Date() + " Connection from origin " + request.origin + " rejected."
+      );
+      return;
+    }
 
-//get the io
-const getio = () => io;
+    var connection = request.accept("echo-protocol", request.origin);
+    console.log(new Date() + " Connection accepted.");
+    connection.on("message", function(message) {
+      if (message.type === "utf8") {
+        console.log("Received Message: " + message.utf8Data);
+        connection.sendUTF(message.utf8Data);
+      } else if (message.type === "binary") {
+        console.log(
+          "Received Binary Message of " + message.binaryData.length + " bytes"
+        );
+        connection.sendBytes(message.binaryData);
+      }
+    });
 
-//Socket connection (user)
+    connection.on("close", function(reasonCode, description) {
+      console.log(
+        new Date() + " Peer " + connection.remoteAddress + " disconnected."
+      );
+    });
+  });
+}
+
 module.exports = {
-  listen,
-  getio,
+  listen
 };
