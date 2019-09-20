@@ -1,5 +1,5 @@
-const WebSocketServer = require("websocket").server;
-let wsServer;
+const WebSocket = require("ws");
+let wss;
 
 function originIsAllowed(origin) {
   // TODO: logic for which origins are allowed to connect to websocket
@@ -7,40 +7,33 @@ function originIsAllowed(origin) {
 }
 
 function listen(server) {
-  wsServer = new WebSocketServer({
-    httpServer: server,
-    autoAcceptConnections: false
+  wss = new WebSocket.Server({
+    server
   });
 
-  wsServer.on("request", function(request) {
-    if (!originIsAllowed(request.origin)) {
-      request.reject();
-      console.log(
-        new Date() + " Connection from origin " + request.origin + " rejected."
-      );
-      return;
-    }
-
-    var connection = request.accept("echo-protocol", request.origin);
-    console.log(new Date() + " Connection accepted.");
-    connection.on("message", function(message) {
-      if (message.type === "utf8") {
-        console.log("Received Message: " + message.utf8Data);
-        connection.sendUTF(message.utf8Data);
-      } else if (message.type === "binary") {
-        console.log(
-          "Received Binary Message of " + message.binaryData.length + " bytes"
-        );
-        connection.sendBytes(message.binaryData);
-      }
+  wss.on("connection", ws => {
+    //detect closed or broken communications
+    ws.isAlive = true;
+    ws.on("pong", () => {
+      ws.isAlive = true;
     });
 
-    connection.on("close", function(reasonCode, description) {
-      console.log(
-        new Date() + " Peer " + connection.remoteAddress + " disconnected."
-      );
+    ws.on("message", msg => {
+      console.log("received: %s", msg);
     });
+
+    ws.send(JSON.stringify({a: 'this', b: 'is', c:'test'}))
   });
+
+  //heart beat checks
+  const interval = setInterval(()=>{
+    wss.clients.forEach((ws)=>{
+      if(ws.isAlive === false) return ws.terminate();
+
+      ws.isAlive = false;
+      ws.ping()
+    })
+  }, 30000)
 }
 
 module.exports = {
