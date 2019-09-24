@@ -1,11 +1,6 @@
 const WebSocket = require("ws");
 let wss;
 
-function originIsAllowed(origin) {
-  // TODO: logic for which origins are allowed to connect to websocket
-  return true;
-}
-
 function listen(server) {
   wss = new WebSocket.Server({
     server
@@ -36,6 +31,7 @@ function listen(server) {
   }, 30000)
 }
 
+//Socket connection (user)
 module.exports = {
-  listen
+  listen,
 };
