@@ -18,7 +18,7 @@ exports.Cleanup = function Cleanup(callback) {
     console.log('Ctrl-C...');
     process.exit();
   });
-  //test
+
   //catch uncaught exceptions, trace, then exit normally
   process.on('uncaughtException', function(e) {
     console.log('Uncaught Exception...');
