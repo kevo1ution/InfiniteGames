@@ -1,4 +1,3 @@
-
 let noOp = ()=>{}
 
 exports.Cleanup = function Cleanup(callback) {
@@ -26,4 +25,3 @@ exports.Cleanup = function Cleanup(callback) {
     process.exit(99);
   });
 };
-
