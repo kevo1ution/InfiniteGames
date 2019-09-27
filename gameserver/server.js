@@ -22,7 +22,9 @@ dbsetup.connectDB(err => {
   if (err) throw err;
 
   //setup socket
-  require('./src/Service/socketHandler').listen(server);
+  const WebSocketService = require('./src/Service/socketHandler')
+  WebSocketService.setup(server);
+  WebSocketService.attachFunc('test', onTest)
 
   //Endpoint setup
   require('./src/Controller/frontendServe').setup(app);
