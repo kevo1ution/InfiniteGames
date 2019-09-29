@@ -1,10 +1,12 @@
-module.exports = {
+{
     "env": {
         "commonjs": true,
         "es6": true,
         "node": true
     },
-    "extends": "eslint:recommended",
+    "extends": [
+        "airbnb-base"
+    ],
     "globals": {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"
@@ -14,4 +16,4 @@ module.exports = {
     },
     "rules": {
     }
-};
+}

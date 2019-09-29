@@ -1,17 +1,17 @@
 
-class EventHandler{
-  constructor(){
+class EventHandler {
+  constructor() {
     this.eventFuncs = new Map();
   }
 
   async fireEvent(eventName, obj) {
-    this.eventFuncs.get(eventName).forEach(eventFunc => {
+    this.eventFuncs.get(eventName).forEach((eventFunc) => {
       eventFunc(obj);
     });
   }
 
-  //event attachments
-  async onEvent (eventName, func) {
+  // event attachments
+  async onEvent(eventName, func) {
     if (this.eventFuncs.has(eventName)) {
       this.eventFuncs.get(eventName).push(func);
     } else {
@@ -19,10 +19,10 @@ class EventHandler{
     }
   }
 
-  async onEventDisconnect (eventName, func){
+  async onEventDisconnect(eventName, func) {
     this.eventFuncs.set(
-      eventName, 
-      this.eventFuncs.get(eventName).filter(funcElem => funcElem != func)
+      eventName,
+      this.eventFuncs.get(eventName).filter((funcElem) => funcElem != func),
     );
   }
 }

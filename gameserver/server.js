@@ -20,10 +20,10 @@ dbsetup.connectDB(err => {
   if (err) throw err;
 
   //setup socket
-  const WebSocketService = require('./src/Service/WebSocketService')
-  WebSocketService.setup(app);
+  require('./src/Service/WebSocketService').setup(server);
 
-  const PlayerService = require('./src/Service/PlayersService')
+  //setup player service
+  require('./src/Service/PlayersService').setup();
 
   //Endpoint setup
   require('./src/Controller/frontendServe').setup(app);
