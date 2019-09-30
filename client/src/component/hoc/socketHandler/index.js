@@ -13,5 +13,3 @@ ws.addEventListener("message", event => {
 ws.addEventListener("close", () => {
   console.log("closed");
 });
-
-const on = (eventName, func) => {};

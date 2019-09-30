@@ -7,7 +7,8 @@
     "start": "cross-env NODE_ENV=\"development\" node server.js",
     "development": "cross-env NODE_ENV=\"development\" node server.js",
     "production": "cross-env NODE_ENV=\"production\" node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint ./src server.js"
   },
   "engines": {
     "node": ">=8.11.1",
@@ -24,5 +25,16 @@
     "moment": "^2.24.0",
     "mongodb": "^3.3.0-beta2",
     "ws": "^7.1.2"
+  },
+  "devDependencies": {
+    "ava": "^2.4.0",
+    "eslint": "^6.5.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.14.3",
+    "eslint-plugin-react-hooks": "^1.7.0",
+    "sinon": "^7.5.0"
   }
 }
