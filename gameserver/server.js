@@ -1,5 +1,3 @@
-'use strict';
-
 //dependencies
 const express = require('express');
 const cors = require('cors');
@@ -22,12 +20,15 @@ dbsetup.connectDB(err => {
   if (err) throw err;
 
   //setup socket
-  require('./src/Service/socketHandler').listen(server);
+  require('./src/Service/WebSocketService').setup(server);
+
+  //setup player service
+  require('./src/Service/PlayersService').setup();
 
   //Endpoint setup
   require('./src/Controller/frontendServe').setup(app);
 
-  //start listening on port 4005
+  //start listening on port
   server.listen(global.gConfig.node_port, () => {
     console.log(
       `${global.gConfig.app_name} listening on port ${global.gConfig.node_port}`

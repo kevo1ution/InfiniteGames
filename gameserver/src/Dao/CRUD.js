@@ -1,42 +1,37 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-underscore-dangle */
 const mongo = require('mongodb');
 
-//abstract parent class that has basic crud operations used
-//by different Dao singletons
+// abstract parent class that has basic crud operations used
+// by different Dao singletons
 class CRUD {
-  static collection = null;
+  static async setup(_db, collectionName, mockData, config) {
+    // create collections if not made
+    this.collection = await _db
+      .createCollection(collectionName, {
+        strict: true,
+      });
 
-  static async setup(_db, collectionName, mockData, config){
-    //create collections if not made
-    try{
-      this.collection = await _db
-        .createCollection(collectionName, {
-          strict: true
-        });
-    }
-    catch(error){
-      throw error;
-    }
-
-    if (process.env.NODE_ENV == 'development') {
-      //convert ids to mongo ids
-      mockData.forEach(function(element, index) {
-        mockData[index]._id = new mongodb.ObjectID(element._id);
+    if (process.env.NODE_ENV === 'development') {
+      // convert ids to mongo ids
+      mockData.forEach((element, index) => {
+        mockData[index]._id = new mongo.ObjectID(element._id);
       });
       await this.collection
         .insertMany(
           mockData,
           { forceServerObjectId: true },
-          (err, doc) => {}
+          (err, doc) => {},
         );
 
-      //create indexes
+      // create indexes
       await _db
         .collection(collectionName)
         .createIndexes(config.indexes, config.indexOptions, (err, doc) => {});
     }
   }
 
-  static read(query, options){
+  static read(query, options) {
     return new Promise((resolve, reject) => {
       try {
         if (query._id) {
@@ -50,10 +45,10 @@ class CRUD {
           } else {
             cursor
               .count(false, {})
-              .then(count => {
+              .then((count) => {
                 resolve([doc, count]);
               })
-              .catch(errCount => {
+              .catch((errCount) => {
                 reject(errCount);
               });
           }
@@ -62,9 +57,9 @@ class CRUD {
         reject(err);
       }
     });
-  };
+  }
 
-  static create(obj){
+  static create(obj) {
     return new Promise((resolve, reject) => {
       try {
         this.collection.insertOne(obj, (err, insertOneWriteOpResult) => {
@@ -78,9 +73,9 @@ class CRUD {
         reject(err);
       }
     });
-  };
+  }
 
-  static update(query, updates, options){
+  static update(query, updates, options) {
     return new Promise((resolve, reject) => {
       try {
         if (query._id) {
@@ -97,15 +92,15 @@ class CRUD {
             } else {
               resolve(updateWriteOpResult);
             }
-          }
+          },
         );
       } catch (err) {
         reject(err);
       }
     });
-  };
+  }
 
-  static destroy(query, options){
+  static destroy(query, options) {
     return new Promise((resolve, reject) => {
       try {
         if (query._id) {
@@ -123,7 +118,7 @@ class CRUD {
         reject(err);
       }
     });
-  };
+  }
 }
 
 module.exports = CRUD;

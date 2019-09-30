@@ -1,6 +1,7 @@
 import React from "react";
 import logo from "./logo.svg";
 import Board from "./component/Board";
+import SocketHandler from "./component/hoc/socketHandler"
 import "./App.css";
 
 class App extends React.Component {

@@ -7,11 +7,9 @@ ws.addEventListener("open", () => {
 
 ws.addEventListener("message", event => {
   const msg = JSON.parse(event.data);
-  const eventName = msg.eventName;
+  console.log(msg);
 });
 
 ws.addEventListener("close", () => {
   console.log("closed");
 });
-
-const on = (eventName, func) => {};
